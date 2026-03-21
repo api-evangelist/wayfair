@@ -1,0 +1,53 @@
+name: Wayfair
+description: >-
+  Wayfair Inc. is one of the world's largest online destinations for home goods
+  and furniture. Wayfair offers a developer portal with GraphQL-based APIs for
+  suppliers to manage orders, inventory, product catalogs, and shipping.
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://github.com/api-evangelist/wayfair/blob/main/apis.yml
+created: '2025-03-01'
+modified: '2025-03-01'
+specificationVersion: '0.18'
+tags:
+  - E-Commerce
+  - Furniture
+  - Home Goods
+  - Retail
+  - Suppliers
+apis:
+  - name: Wayfair Supplier API
+    description: >-
+      GraphQL-based API for Wayfair suppliers to manage orders, inventory,
+      product catalogs, shipping notifications, and more. Provides access to
+      purchase orders, inventory updates, catalog management, and advanced
+      shipment notifications.
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://developer.wayfair.com/docs/
+    baseURL: https://api.wayfair.com/v1/graphql
+    tags:
+      - E-Commerce
+      - Orders
+      - Inventory
+      - Catalog
+      - Shipping
+      - GraphQL
+    properties:
+      - type: Documentation
+        url: https://developer.wayfair.com/docs/
+      - type: OpenAPI
+        url: openapi/wayfair-supplier-api.yml
+common:
+  - type: Portal
+    url: https://developer.wayfair.com/docs/
+  - type: Developer Portal
+    url: https://developer.wayfair.io/posts/introduction
+  - type: GraphQL Documentation
+    url: https://developer.wayfair.io/posts/graphQL
+  - type: Website
+    url: https://www.wayfair.com/
+  - type: About
+    url: https://www.aboutwayfair.com/
+maintainers:
+  - FN: API Evangelist
+    url: https://apievangelist.com
+    email: info@apievangelist.com
