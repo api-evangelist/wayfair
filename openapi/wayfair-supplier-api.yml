@@ -1,0 +1,125 @@
+openapi: 3.1.0
+info:
+  title: Wayfair Supplier API
+  description: >-
+    GraphQL-based API for Wayfair suppliers to manage orders, inventory, product
+    catalogs, shipping notifications, and more. This OpenAPI specification
+    documents the REST-style token endpoint and the GraphQL endpoint used by
+    suppliers to interact with the Wayfair platform.
+  version: 1.0.0
+  contact:
+    name: Wayfair Developer Support
+    url: https://developer.wayfair.com/docs/
+  license:
+    name: Proprietary
+    url: https://www.wayfair.com/terms-of-use
+servers:
+  - url: https://api.wayfair.com/v1
+    description: Production
+  - url: https://sandbox.api.wayfair.com/v1
+    description: Sandbox
+paths:
+  /graphql:
+    post:
+      operationId: executeGraphQLQuery
+      summary: Execute GraphQL Query
+      description: >-
+        Execute a GraphQL query or mutation against the Wayfair Supplier API.
+        Supports operations for order management, inventory updates, product
+        catalog management, and shipping notifications.
+      tags:
+        - GraphQL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  description: The GraphQL query or mutation string.
+                variables:
+                  type: object
+                  description: Variables for the GraphQL operation.
+                operationName:
+                  type: string
+                  description: The name of the operation to execute.
+      responses:
+        '200':
+          description: Successful GraphQL response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    description: The result data from the GraphQL query.
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                        locations:
+                          type: array
+                          items:
+                            type: object
+                        path:
+                          type: array
+                          items:
+                            type: string
+        '401':
+          description: Unauthorized - invalid or expired access token.
+        '403':
+          description: Forbidden - insufficient permissions.
+  /auth/token:
+    post:
+      operationId: getAccessToken
+      summary: Get Access Token
+      description: >-
+        Obtain a temporary access token using your application client ID and
+        secret. Tokens are used to authenticate subsequent API requests.
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - client_id
+                - client_secret
+              properties:
+                client_id:
+                  type: string
+                  description: The application client ID.
+                client_secret:
+                  type: string
+                  description: The application client secret.
+      responses:
+        '200':
+          description: Access token returned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                  expires_in:
+                    type: integer
+        '401':
+          description: Invalid credentials.
+tags:
+  - name: GraphQL
+    description: GraphQL query and mutation operations for supplier management.
+  - name: Authentication
+    description: Token-based authentication for API access.
