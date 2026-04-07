@@ -25,12 +25,12 @@ apis:
     humanURL: https://developer.wayfair.com/docs/
     baseURL: https://api.wayfair.com/v1/graphql
     tags:
-      - E-Commerce
-      - Orders
-      - Inventory
       - Catalog
-      - Shipping
+      - E-Commerce
       - GraphQL
+      - Inventory
+      - Orders
+      - Shipping
     properties:
       - type: Documentation
         url: https://developer.wayfair.com/docs/
