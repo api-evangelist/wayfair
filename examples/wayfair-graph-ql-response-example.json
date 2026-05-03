@@ -1,0 +1,17 @@
+{
+  "data": {},
+  "errors": [
+    {
+      "message": "Field 'unknownField' doesn't exist on type 'PurchaseOrder'",
+      "locations": [
+        {
+          "line": {},
+          "column": {}
+        }
+      ],
+      "path": [
+        "example-value"
+      ]
+    }
+  ]
+}

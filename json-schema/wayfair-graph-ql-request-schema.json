@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wayfair/refs/heads/main/json-schema/wayfair-graph-ql-request-schema.json",
+  "title": "GraphQLRequest",
+  "description": "GraphQLRequest schema from Wayfair Supplier API",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "The GraphQL query or mutation string.",
+      "example": "query { purchaseOrders(limit: 10) { edges { node { poNumber status } } } }"
+    },
+    "variables": {
+      "type": "object",
+      "description": "Variables for the GraphQL operation."
+    },
+    "operationName": {
+      "type": "string",
+      "description": "The name of the operation to execute when the query contains multiple operations.",
+      "example": "GetPurchaseOrders"
+    }
+  },
+  "required": [
+    "query"
+  ]
+}

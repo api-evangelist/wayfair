@@ -1,0 +1,5 @@
+{
+  "query": "query { purchaseOrders(limit: 10) { edges { node { poNumber status } } } }",
+  "variables": {},
+  "operationName": "GetPurchaseOrders"
+}

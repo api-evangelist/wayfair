@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wayfair/refs/heads/main/json-schema/wayfair-token-request-schema.json",
+  "title": "TokenRequest",
+  "description": "TokenRequest schema from Wayfair Supplier API",
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "The application client ID issued by Wayfair.",
+      "example": "your-client-id-here"
+    },
+    "client_secret": {
+      "type": "string",
+      "description": "The application client secret issued by Wayfair.",
+      "example": "your-client-secret-here"
+    }
+  },
+  "required": [
+    "client_id",
+    "client_secret"
+  ]
+}

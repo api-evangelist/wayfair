@@ -1,0 +1,75 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "wf": "https://developer.wayfair.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "GraphQLError": "wf:GraphQLError",
+    "GraphQLRequest": "wf:GraphQLRequest",
+    "GraphQLResponse": "wf:GraphQLResponse",
+    "TokenRequest": "wf:TokenRequest",
+    "TokenResponse": "wf:TokenResponse",
+    "message": {
+      "@id": "wf:message",
+      "@type": "xsd:string"
+    },
+    "locations": {
+      "@id": "wf:locations",
+      "@container": "@set"
+    },
+    "line": {
+      "@id": "wf:line",
+      "@type": "xsd:integer"
+    },
+    "column": {
+      "@id": "wf:column",
+      "@type": "xsd:integer"
+    },
+    "path": {
+      "@id": "wf:path",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "query": {
+      "@id": "wf:query",
+      "@type": "xsd:string"
+    },
+    "variables": {
+      "@id": "wf:variables",
+      "@type": "@id"
+    },
+    "operationName": {
+      "@id": "wf:operationName",
+      "@type": "xsd:string"
+    },
+    "data": {
+      "@id": "wf:data",
+      "@type": "@id"
+    },
+    "errors": {
+      "@id": "wf:errors",
+      "@container": "@set"
+    },
+    "clientId": {
+      "@id": "wf:client_id",
+      "@type": "xsd:string"
+    },
+    "clientSecret": {
+      "@id": "wf:client_secret",
+      "@type": "xsd:string"
+    },
+    "accessToken": {
+      "@id": "wf:access_token",
+      "@type": "xsd:string"
+    },
+    "tokenType": {
+      "@id": "wf:token_type",
+      "@type": "xsd:string"
+    },
+    "expiresIn": {
+      "@id": "wf:expires_in",
+      "@type": "xsd:integer"
+    }
+  }
+}

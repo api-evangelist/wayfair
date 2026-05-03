@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/wayfair/refs/heads/main/json-schema/wayfair-graph-ql-error-schema.json",
+  "title": "GraphQLError",
+  "description": "GraphQLError schema from Wayfair Supplier API",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "Error message.",
+      "example": "Field 'unknownField' doesn't exist on type 'PurchaseOrder'"
+    },
+    "locations": {
+      "type": "array",
+      "description": "Source locations in the query where the error occurred.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "line": {
+            "type": "integer",
+            "example": 3
+          },
+          "column": {
+            "type": "integer",
+            "example": 5
+          }
+        }
+      }
+    },
+    "path": {
+      "type": "array",
+      "description": "Path in the response data where the error occurred.",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "message": "Field 'unknownField' doesn't exist on type 'PurchaseOrder'",
+  "locations": [
+    {
+      "line": 3,
+      "column": 5
+    }
+  ],
+  "path": [
+    "example-value"
+  ]
+}

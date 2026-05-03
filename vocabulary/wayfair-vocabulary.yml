@@ -1,0 +1,167 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "Wayfair"
+  description: >-
+    Unified vocabulary for the Wayfair Supplier API, mapping GraphQL-based
+    order, inventory, catalog, and shipping operations across operational
+    (OpenAPI) and capability (Naftiko) dimensions for supplier integrations.
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+operational:
+  apis:
+    - namespace: wayfair
+      version: "1.0.0"
+      baseUrl: https://api.wayfair.com/v1
+      status: active
+      description: Wayfair Supplier GraphQL API
+
+  resources:
+    - name: authentication
+      api: wayfair
+      actions:
+        - get-access-token
+    - name: graphql
+      api: wayfair
+      actions:
+        - execute-graphql-query
+
+  actions:
+    - name: get-access-token
+      http_method: POST
+      pattern: write
+      description: Obtain OAuth2 bearer token via client credentials
+    - name: execute-graphql-query
+      http_method: POST
+      pattern: query
+      description: Execute GraphQL query or mutation for supplier operations
+
+  schemas:
+    authentication:
+      - name: TokenRequest
+        description: OAuth2 client credentials token request
+        key_properties:
+          - client_id
+          - client_secret
+      - name: TokenResponse
+        description: OAuth2 access token response
+        key_properties:
+          - access_token
+          - token_type
+          - expires_in
+    graphql:
+      - name: GraphQLRequest
+        description: GraphQL query/mutation request body
+        key_properties:
+          - query
+          - variables
+          - operationName
+      - name: GraphQLResponse
+        description: GraphQL response with data and optional errors
+        key_properties:
+          - data
+          - errors
+      - name: GraphQLError
+        description: GraphQL error with message and location
+        key_properties:
+          - message
+          - locations
+          - path
+
+  parameters:
+    authentication:
+      - name: client_id
+        description: OAuth2 client ID
+      - name: client_secret
+        description: OAuth2 client secret
+    graphql:
+      - name: query
+        description: GraphQL query or mutation string
+      - name: variables
+        description: GraphQL operation variables
+      - name: operationName
+        description: Named operation identifier
+
+  authentication:
+    schemes:
+      - name: bearerAuth
+        type: http
+        scheme: bearer
+        format: JWT
+        usage: All GraphQL and authenticated endpoints
+
+capability:
+  workflows:
+    - name: supplier-operations
+      file: capabilities/supplier-operations.yaml
+      description: End-to-end supplier order, inventory, catalog, and shipping management
+      apis_combined:
+        - wayfair
+      tool_count: 7
+      personas:
+        - Supplier Integration Engineer
+        - E-Commerce Operations Manager
+
+  personas:
+    - id: supplier-integration-engineer
+      name: Supplier Integration Engineer
+      description: Engineer building automated integrations with the Wayfair supplier platform
+      workflows:
+        - supplier-operations
+    - id: ecommerce-operations-manager
+      name: E-Commerce Operations Manager
+      description: Operations manager overseeing order fulfillment and inventory for Wayfair
+      workflows:
+        - supplier-operations
+
+  domains:
+    - name: Order Management
+      description: Purchase order retrieval, acknowledgment, and fulfillment
+      resources:
+        - graphql
+    - name: Inventory
+      description: Real-time inventory synchronization with the Wayfair marketplace
+      resources:
+        - graphql
+    - name: Catalog Management
+      description: Product listing, pricing, and attribute management
+      resources:
+        - graphql
+    - name: Shipping
+      description: Advanced shipment notifications and tracking
+      resources:
+        - graphql
+
+  namespaces:
+    - name: wayfair
+      type: consumed
+      base_uri: https://api.wayfair.com/v1
+    - name: wayfair-supplier-ops-api
+      type: rest-exposed
+      port: 8080
+    - name: wayfair-supplier-ops-mcp
+      type: mcp-exposed
+      port: 9090
+
+  binds:
+    - WAYFAIR_CLIENT_ID
+    - WAYFAIR_CLIENT_SECRET
+
+crossReference:
+  - resource: graphql
+    operations:
+      - execute-graphql-query
+    workflows:
+      - supplier-operations
+    personas:
+      - Supplier Integration Engineer
+      - E-Commerce Operations Manager
+
+  - resource: authentication
+    operations:
+      - get-access-token
+    workflows:
+      - supplier-operations
+    personas:
+      - Supplier Integration Engineer

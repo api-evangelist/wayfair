@@ -5,7 +5,9 @@ info:
     GraphQL-based API for Wayfair suppliers to manage orders, inventory, product
     catalogs, shipping notifications, and more. This OpenAPI specification
     documents the REST-style token endpoint and the GraphQL endpoint used by
-    suppliers to interact with the Wayfair platform.
+    suppliers to interact with the Wayfair platform. Wayfair's federated
+    GraphQL architecture allows suppliers to request only the data they need
+    across 10,000+ supplier integrations.
   version: 1.0.0
   contact:
     name: Wayfair Developer Support
@@ -13,77 +15,26 @@ info:
   license:
     name: Proprietary
     url: https://www.wayfair.com/terms-of-use
+  x-last-validated: '2026-05-03'
 servers:
   - url: https://api.wayfair.com/v1
     description: Production
   - url: https://sandbox.api.wayfair.com/v1
     description: Sandbox
+tags:
+  - name: GraphQL
+    description: GraphQL query and mutation operations for supplier management.
+  - name: Authentication
+    description: Token-based authentication for API access.
 paths:
-  /graphql:
-    post:
-      operationId: executeGraphQLQuery
-      summary: Execute GraphQL Query
-      description: >-
-        Execute a GraphQL query or mutation against the Wayfair Supplier API.
-        Supports operations for order management, inventory updates, product
-        catalog management, and shipping notifications.
-      tags:
-        - GraphQL
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - query
-              properties:
-                query:
-                  type: string
-                  description: The GraphQL query or mutation string.
-                variables:
-                  type: object
-                  description: Variables for the GraphQL operation.
-                operationName:
-                  type: string
-                  description: The name of the operation to execute.
-      responses:
-        '200':
-          description: Successful GraphQL response.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    description: The result data from the GraphQL query.
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        message:
-                          type: string
-                        locations:
-                          type: array
-                          items:
-                            type: object
-                        path:
-                          type: array
-                          items:
-                            type: string
-        '401':
-          description: Unauthorized - invalid or expired access token.
-        '403':
-          description: Forbidden - insufficient permissions.
   /auth/token:
     post:
       operationId: getAccessToken
-      summary: Get Access Token
+      summary: Wayfair Get Access Token
       description: >-
-        Obtain a temporary access token using your application client ID and
-        secret. Tokens are used to authenticate subsequent API requests.
+        Obtain a temporary OAuth2 access token using your application client ID
+        and secret. Tokens are used to authenticate subsequent API requests.
+        Tokens expire and must be refreshed periodically.
       tags:
         - Authentication
       requestBody:
@@ -91,35 +42,233 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - client_id
-                - client_secret
-              properties:
-                client_id:
-                  type: string
-                  description: The application client ID.
-                client_secret:
-                  type: string
-                  description: The application client secret.
+              $ref: '#/components/schemas/TokenRequest'
+            examples:
+              GetAccessTokenRequestExample:
+                summary: Default getAccessToken request
+                x-microcks-default: true
+                value:
+                  client_id: your-client-id-here
+                  client_secret: your-client-secret-here
       responses:
         '200':
           description: Access token returned successfully.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  access_token:
-                    type: string
-                  token_type:
-                    type: string
-                  expires_in:
-                    type: integer
+                $ref: '#/components/schemas/TokenResponse'
+              examples:
+                GetAccessToken200Example:
+                  summary: Default getAccessToken 200 response
+                  x-microcks-default: true
+                  value:
+                    access_token: eyJhbGciOiJSUzI1NiJ9.example.token
+                    token_type: Bearer
+                    expires_in: 3600
         '401':
           description: Invalid credentials.
-tags:
-  - name: GraphQL
-    description: GraphQL query and mutation operations for supplier management.
-  - name: Authentication
-    description: Token-based authentication for API access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                GetAccessToken401Example:
+                  summary: Default getAccessToken 401 response
+                  x-microcks-default: true
+                  value:
+                    error: invalid_client
+                    error_description: Client authentication failed.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /graphql:
+    post:
+      operationId: executeGraphQLQuery
+      summary: Wayfair Execute GraphQL Query
+      description: >-
+        Execute a GraphQL query or mutation against the Wayfair Supplier API.
+        Supports operations for order management, inventory updates, product
+        catalog management, and shipping notifications. The GraphQL schema
+        enables suppliers to precisely request only the fields needed for their
+        integration workflows.
+      tags:
+        - GraphQL
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GraphQLRequest'
+            examples:
+              ExecuteGraphQLQueryRequestExample:
+                summary: Default executeGraphQLQuery request - purchase orders query
+                x-microcks-default: true
+                value:
+                  query: |
+                    query {
+                      purchaseOrders(limit: 10, status: "new") {
+                        edges {
+                          node {
+                            poNumber
+                            status
+                            createdDate
+                            lineItems {
+                              sku
+                              quantity
+                              unitCost
+                            }
+                          }
+                        }
+                      }
+                    }
+                  variables: {}
+                  operationName: GetPurchaseOrders
+      responses:
+        '200':
+          description: Successful GraphQL response with data or errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphQLResponse'
+              examples:
+                ExecuteGraphQLQuery200Example:
+                  summary: Default executeGraphQLQuery 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      purchaseOrders:
+                        edges:
+                          - node:
+                              poNumber: PO-20260503-001
+                              status: new
+                              createdDate: '2026-05-03T09:00:00Z'
+                              lineItems:
+                                - sku: SKU-123456
+                                  quantity: 5
+                                  unitCost: 89.99
+                    errors: []
+        '401':
+          description: Unauthorized - invalid or expired access token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                ExecuteGraphQLQuery401Example:
+                  summary: Default executeGraphQLQuery 401 response
+                  x-microcks-default: true
+                  value:
+                    error: unauthorized
+                    error_description: Invalid or expired access token.
+        '403':
+          description: Forbidden - insufficient permissions for the requested operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        OAuth2 Bearer token obtained from the /auth/token endpoint.
+        Include as Authorization: Bearer {token} header on all GraphQL requests.
+  schemas:
+    TokenRequest:
+      type: object
+      required:
+        - client_id
+        - client_secret
+      properties:
+        client_id:
+          type: string
+          description: The application client ID issued by Wayfair.
+          example: your-client-id-here
+        client_secret:
+          type: string
+          description: The application client secret issued by Wayfair.
+          example: your-client-secret-here
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: JWT bearer token for subsequent API requests.
+          example: eyJhbGciOiJSUzI1NiJ9.example.token
+        token_type:
+          type: string
+          description: Token type, always "Bearer".
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Token expiration time in seconds.
+          example: 3600
+    GraphQLRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: The GraphQL query or mutation string.
+          example: "query { purchaseOrders(limit: 10) { edges { node { poNumber status } } } }"
+        variables:
+          type: object
+          description: Variables for the GraphQL operation.
+        operationName:
+          type: string
+          description: The name of the operation to execute when the query contains multiple operations.
+          example: GetPurchaseOrders
+    GraphQLError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message.
+          example: Field 'unknownField' doesn't exist on type 'PurchaseOrder'
+        locations:
+          type: array
+          description: Source locations in the query where the error occurred.
+          items:
+            type: object
+            properties:
+              line:
+                type: integer
+                example: 3
+              column:
+                type: integer
+                example: 5
+        path:
+          type: array
+          description: Path in the response data where the error occurred.
+          items:
+            type: string
+    GraphQLResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          description: The result data from the GraphQL query.
+        errors:
+          type: array
+          description: List of errors if any occurred during query execution.
+          items:
+            $ref: '#/components/schemas/GraphQLError'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error code.
+          example: unauthorized
+        error_description:
+          type: string
+          description: Human-readable error description.
+          example: Invalid or expired access token.
