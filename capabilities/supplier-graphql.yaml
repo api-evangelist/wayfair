@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Wayfair Supplier API — GraphQL
+  description: 'Wayfair Supplier API — GraphQL. 1 operations. Lead operation: Wayfair Execute GraphQL Query. Self-contained
+    Naftiko capability covering one Wayfair business surface.'
+  tags:
+  - Wayfair
+  - GraphQL
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    WAYFAIR_API_KEY: WAYFAIR_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: supplier-graphql
+    baseUri: https://api.wayfair.com/v1
+    description: Wayfair Supplier API — GraphQL business capability. Self-contained, no shared references.
+    resources:
+    - name: graphql
+      path: /graphql
+      operations:
+      - name: executegraphqlquery
+        method: POST
+        description: Wayfair Execute GraphQL Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.WAYFAIR_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: supplier-graphql-rest
+    port: 8080
+    description: REST adapter for Wayfair Supplier API — GraphQL. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/graphql
+      name: graphql
+      description: REST surface for graphql.
+      operations:
+      - method: POST
+        name: executegraphqlquery
+        description: Wayfair Execute GraphQL Query
+        call: supplier-graphql.executegraphqlquery
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: supplier-graphql-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Wayfair Supplier API — GraphQL. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: wayfair-execute-graphql-query
+      description: Wayfair Execute GraphQL Query
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: supplier-graphql.executegraphqlquery
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
