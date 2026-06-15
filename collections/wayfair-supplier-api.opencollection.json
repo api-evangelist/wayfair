@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Wayfair Supplier API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Wayfair Get Access Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.wayfair.com/v1/auth/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Obtain a temporary OAuth2 access token using your application client ID and secret. Tokens are used to authenticate subsequent API requests. Tokens expire and must be refreshed periodically."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "GraphQL",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Wayfair Execute GraphQL Query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.wayfair.com/v1/graphql",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Execute a GraphQL query or mutation against the Wayfair Supplier API. Supports operations for order management, inventory updates, product catalog management, and shipping notifications. The GraphQL schema enables suppliers to precisely request only the fields needed for their integration workflows."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

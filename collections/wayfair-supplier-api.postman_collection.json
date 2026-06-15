@@ -1,0 +1,389 @@
+{
+  "item": [
+    {
+      "id": "b91debf0-27e7-4f37-a7cb-3d1cab987b9f",
+      "name": "GraphQL",
+      "description": {
+        "content": "GraphQL query and mutation operations for supplier management.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "abc0518a-7b5c-41e9-b0aa-d6d4dee4589b",
+          "name": "Wayfair Execute GraphQL Query",
+          "request": {
+            "name": "Wayfair Execute GraphQL Query",
+            "description": {
+              "content": "Execute a GraphQL query or mutation against the Wayfair Supplier API. Supports operations for order management, inventory updates, product catalog management, and shipping notifications. The GraphQL schema enables suppliers to precisely request only the fields needed for their integration workflows.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "graphql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": \"<object>\",\n  \"operationName\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3342ec6e-50d6-4b99-a5b5-1852a886fe37",
+              "name": "Successful GraphQL response with data or errors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "graphql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"query {\\n  purchaseOrders(limit: 10, status: \\\"new\\\") {\\n    edges {\\n      node {\\n        poNumber\\n        status\\n        createdDate\\n        lineItems {\\n          sku\\n          quantity\\n          unitCost\\n        }\\n      }\\n    }\\n  }\\n}\\n\",\n  \"variables\": {},\n  \"operationName\": \"GetPurchaseOrders\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"purchaseOrders\": {\n      \"edges\": [\n        {\n          \"node\": {\n            \"poNumber\": \"PO-20260503-001\",\n            \"status\": \"new\",\n            \"createdDate\": \"2026-05-03T09:00:00Z\",\n            \"lineItems\": [\n              {\n                \"sku\": \"SKU-123456\",\n                \"quantity\": 5,\n                \"unitCost\": 89.99\n              }\n            ]\n          }\n        }\n      ]\n    }\n  },\n  \"errors\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3144e1db-1ae7-4097-a591-bc78902edc34",
+              "name": "Unauthorized - invalid or expired access token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "graphql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"query {\\n  purchaseOrders(limit: 10, status: \\\"new\\\") {\\n    edges {\\n      node {\\n        poNumber\\n        status\\n        createdDate\\n        lineItems {\\n          sku\\n          quantity\\n          unitCost\\n        }\\n      }\\n    }\\n  }\\n}\\n\",\n  \"variables\": {},\n  \"operationName\": \"GetPurchaseOrders\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"unauthorized\",\n  \"error_description\": \"Invalid or expired access token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4bda348c-92fa-4979-aa8e-6cbf116e746c",
+              "name": "Forbidden - insufficient permissions for the requested operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "graphql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"query {\\n  purchaseOrders(limit: 10, status: \\\"new\\\") {\\n    edges {\\n      node {\\n        poNumber\\n        status\\n        createdDate\\n        lineItems {\\n          sku\\n          quantity\\n          unitCost\\n        }\\n      }\\n    }\\n  }\\n}\\n\",\n  \"variables\": {},\n  \"operationName\": \"GetPurchaseOrders\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"unauthorized\",\n  \"error_description\": \"Invalid or expired access token.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "58305b5b-640b-49b6-b6c2-3db49a8927df",
+      "name": "Authentication",
+      "description": {
+        "content": "Token-based authentication for API access.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2968567a-484c-43a7-8915-99327afbc25e",
+          "name": "Wayfair Get Access Token",
+          "request": {
+            "name": "Wayfair Get Access Token",
+            "description": {
+              "content": "Obtain a temporary OAuth2 access token using your application client ID and secret. Tokens are used to authenticate subsequent API requests. Tokens expire and must be refreshed periodically.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a529d326-7049-4446-8dbf-a106a86f95c7",
+              "name": "Access token returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_id\": \"your-client-id-here\",\n  \"client_secret\": \"your-client-secret-here\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"eyJhbGciOiJSUzI1NiJ9.example.token\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": 3600\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6dd86d5b-2c64-4c85-9a91-de3962af0230",
+              "name": "Invalid credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_id\": \"your-client-id-here\",\n  \"client_secret\": \"your-client-secret-here\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_client\",\n  \"error_description\": \"Client authentication failed.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.wayfair.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3444f27d-7735-4d2d-b973-12077ace743f",
+    "name": "Wayfair Supplier API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "GraphQL-based API for Wayfair suppliers to manage orders, inventory, product catalogs, shipping notifications, and more. This OpenAPI specification documents the REST-style token endpoint and the GraphQL endpoint used by suppliers to interact with the Wayfair platform. Wayfair's federated GraphQL architecture allows suppliers to request only the data they need across 10,000+ supplier integrations.\n\nContact Support:\n Name: Wayfair Developer Support",
+      "type": "text/plain"
+    }
+  }
+}
