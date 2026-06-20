@@ -8,7 +8,7 @@ description: >-
   only the data they need.
 type: Index
 url: https://raw.githubusercontent.com/api-evangelist/wayfair/refs/heads/main/apis.yml
-image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - E-Commerce
 - Furniture
@@ -26,7 +26,7 @@ apis:
     GraphQL-based API for Wayfair suppliers to manage orders, inventory, product catalogs, shipping notifications, and
     returns. Provides access to purchase orders, inventory updates, catalog management, and advanced shipment
     notifications via a unified GraphQL endpoint at api.wayfair.com/v1/graphql.
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://developer.wayfair.com/docs/
   baseURL: https://api.wayfair.com/v1/graphql
   tags:
