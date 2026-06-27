@@ -63,10 +63,10 @@ apis:
   - type: JSONStructure
     url: json-structure/wayfair-graph-ql-response-structure.json
     title: GraphQL Response Structure
-  - type: Example
+  - type: Examples
     url: examples/wayfair-graph-ql-request-example.json
     title: GraphQL Request Example
-  - type: Example
+  - type: Examples
     url: examples/wayfair-token-request-example.json
     title: Token Request Example
   - url: graphql/wayfair-graphql.md
