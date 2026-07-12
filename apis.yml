@@ -72,6 +72,12 @@ apis:
   - url: graphql/wayfair-graphql.md
     type: GraphQL
 common:
+- type: VulnerabilityDisclosure
+  url: security/wayfair-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/wayfair-domain-security.yml
+- type: Authentication
+  url: authentication/wayfair-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/wayfair
 - type: Portal
