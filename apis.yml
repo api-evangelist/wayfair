@@ -72,6 +72,8 @@ apis:
   - url: graphql/wayfair-graphql.md
     type: GraphQL
 common:
+- type: AgenticAccess
+  url: agentic-access/wayfair-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/wayfair-vulnerability-disclosure.yml
 - type: DomainSecurity
