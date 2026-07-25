@@ -1,0 +1,160 @@
+openapi: 3.1.0
+info:
+  title: Wayfair Supplier Authentication GraphQL API
+  description: GraphQL-based API for Wayfair suppliers to manage orders, inventory, product catalogs, shipping notifications, and more. This OpenAPI specification documents the REST-style token endpoint and the GraphQL endpoint used by suppliers to interact with the Wayfair platform. Wayfair's federated GraphQL architecture allows suppliers to request only the data they need across 10,000+ supplier integrations.
+  version: 1.0.0
+  contact:
+    name: Wayfair Developer Support
+    url: https://developer.wayfair.com/docs/
+  license:
+    name: Proprietary
+    url: https://www.wayfair.com/terms-of-use
+  x-last-validated: '2026-05-03'
+servers:
+- url: https://api.wayfair.com/v1
+  description: Production
+- url: https://sandbox.api.wayfair.com/v1
+  description: Sandbox
+tags:
+- name: GraphQL
+  description: GraphQL query and mutation operations for supplier management.
+paths:
+  /graphql:
+    post:
+      operationId: executeGraphQLQuery
+      summary: Wayfair Execute GraphQL Query
+      description: Execute a GraphQL query or mutation against the Wayfair Supplier API. Supports operations for order management, inventory updates, product catalog management, and shipping notifications. The GraphQL schema enables suppliers to precisely request only the fields needed for their integration workflows.
+      tags:
+      - GraphQL
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GraphQLRequest'
+            examples:
+              ExecuteGraphQLQueryRequestExample:
+                summary: Default executeGraphQLQuery request - purchase orders query
+                x-microcks-default: true
+                value:
+                  query: "query {\n  purchaseOrders(limit: 10, status: \"new\") {\n    edges {\n      node {\n        poNumber\n        status\n        createdDate\n        lineItems {\n          sku\n          quantity\n          unitCost\n        }\n      }\n    }\n  }\n}\n"
+                  variables: {}
+                  operationName: GetPurchaseOrders
+      responses:
+        '200':
+          description: Successful GraphQL response with data or errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphQLResponse'
+              examples:
+                ExecuteGraphQLQuery200Example:
+                  summary: Default executeGraphQLQuery 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      purchaseOrders:
+                        edges:
+                        - node:
+                            poNumber: PO-20260503-001
+                            status: new
+                            createdDate: '2026-05-03T09:00:00Z'
+                            lineItems:
+                            - sku: SKU-123456
+                              quantity: 5
+                              unitCost: 89.99
+                    errors: []
+        '401':
+          description: Unauthorized - invalid or expired access token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                ExecuteGraphQLQuery401Example:
+                  summary: Default executeGraphQLQuery 401 response
+                  x-microcks-default: true
+                  value:
+                    error: unauthorized
+                    error_description: Invalid or expired access token.
+        '403':
+          description: Forbidden - insufficient permissions for the requested operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    GraphQLRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          description: The GraphQL query or mutation string.
+          example: 'query { purchaseOrders(limit: 10) { edges { node { poNumber status } } } }'
+        variables:
+          type: object
+          description: Variables for the GraphQL operation.
+        operationName:
+          type: string
+          description: The name of the operation to execute when the query contains multiple operations.
+          example: GetPurchaseOrders
+    GraphQLResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          description: The result data from the GraphQL query.
+        errors:
+          type: array
+          description: List of errors if any occurred during query execution.
+          items:
+            $ref: '#/components/schemas/GraphQLError'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error code.
+          example: unauthorized
+        error_description:
+          type: string
+          description: Human-readable error description.
+          example: Invalid or expired access token.
+    GraphQLError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message.
+          example: Field 'unknownField' doesn't exist on type 'PurchaseOrder'
+        locations:
+          type: array
+          description: Source locations in the query where the error occurred.
+          items:
+            type: object
+            properties:
+              line:
+                type: integer
+                example: 3
+              column:
+                type: integer
+                example: 5
+        path:
+          type: array
+          description: Path in the response data where the error occurred.
+          items:
+            type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'OAuth2 Bearer token obtained from the /auth/token endpoint. Include as Authorization: Bearer {token} header on all GraphQL requests.'

@@ -1,0 +1,120 @@
+openapi: 3.1.0
+info:
+  title: Wayfair Supplier Authentication API
+  description: GraphQL-based API for Wayfair suppliers to manage orders, inventory, product catalogs, shipping notifications, and more. This OpenAPI specification documents the REST-style token endpoint and the GraphQL endpoint used by suppliers to interact with the Wayfair platform. Wayfair's federated GraphQL architecture allows suppliers to request only the data they need across 10,000+ supplier integrations.
+  version: 1.0.0
+  contact:
+    name: Wayfair Developer Support
+    url: https://developer.wayfair.com/docs/
+  license:
+    name: Proprietary
+    url: https://www.wayfair.com/terms-of-use
+  x-last-validated: '2026-05-03'
+servers:
+- url: https://api.wayfair.com/v1
+  description: Production
+- url: https://sandbox.api.wayfair.com/v1
+  description: Sandbox
+tags:
+- name: Authentication
+  description: Token-based authentication for API access.
+paths:
+  /auth/token:
+    post:
+      operationId: getAccessToken
+      summary: Wayfair Get Access Token
+      description: Obtain a temporary OAuth2 access token using your application client ID and secret. Tokens are used to authenticate subsequent API requests. Tokens expire and must be refreshed periodically.
+      tags:
+      - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+            examples:
+              GetAccessTokenRequestExample:
+                summary: Default getAccessToken request
+                x-microcks-default: true
+                value:
+                  client_id: your-client-id-here
+                  client_secret: your-client-secret-here
+      responses:
+        '200':
+          description: Access token returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+              examples:
+                GetAccessToken200Example:
+                  summary: Default getAccessToken 200 response
+                  x-microcks-default: true
+                  value:
+                    access_token: eyJhbGciOiJSUzI1NiJ9.example.token
+                    token_type: Bearer
+                    expires_in: 3600
+        '401':
+          description: Invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                GetAccessToken401Example:
+                  summary: Default getAccessToken 401 response
+                  x-microcks-default: true
+                  value:
+                    error: invalid_client
+                    error_description: Client authentication failed.
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: JWT bearer token for subsequent API requests.
+          example: eyJhbGciOiJSUzI1NiJ9.example.token
+        token_type:
+          type: string
+          description: Token type, always "Bearer".
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Token expiration time in seconds.
+          example: 3600
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error code.
+          example: unauthorized
+        error_description:
+          type: string
+          description: Human-readable error description.
+          example: Invalid or expired access token.
+    TokenRequest:
+      type: object
+      required:
+      - client_id
+      - client_secret
+      properties:
+        client_id:
+          type: string
+          description: The application client ID issued by Wayfair.
+          example: your-client-id-here
+        client_secret:
+          type: string
+          description: The application client secret issued by Wayfair.
+          example: your-client-secret-here
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'OAuth2 Bearer token obtained from the /auth/token endpoint. Include as Authorization: Bearer {token} header on all GraphQL requests.'
