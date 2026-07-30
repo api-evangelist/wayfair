@@ -8,7 +8,20 @@ description: >-
   only the data they need.
 type: Index
 url: https://raw.githubusercontent.com/api-evangelist/wayfair/refs/heads/main/apis.yml
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/wayfair.png
 tags:
 - E-Commerce
 - Furniture
@@ -20,57 +33,70 @@ created: '2025-03-01'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-- aid: wayfair:wayfair-supplier-api
-  name: Wayfair Supplier API
-  description: >-
-    GraphQL-based API for Wayfair suppliers to manage orders, inventory, product catalogs, shipping notifications, and
-    returns. Provides access to purchase orders, inventory updates, catalog management, and advanced shipment
-    notifications via a unified GraphQL endpoint at api.wayfair.com/v1/graphql.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: wayfair:wayfair-authentication-api
+  name: Wayfair Authentication API
+  description: Token-based authentication for API access.
   humanURL: https://developer.wayfair.com/docs/
   baseURL: https://api.wayfair.com/v1/graphql
   tags:
-  - Catalog
-  - E-Commerce
-  - GraphQL
-  - Inventory
-  - Orders
-  - Shipping
-  - Suppliers
+  - Authentication
   properties:
+  - type: OpenAPI
+    url: openapi/wayfair-authentication-api-openapi.yml
   - type: Documentation
     url: https://developer.wayfair.com/docs/
   - type: Documentation
     url: https://developer.wayfair.io/posts/graphQL
-    title: GraphQL Documentation
-  - type: OpenAPI
-    url: openapi/wayfair-supplier-api.yml
   - type: JSONSchema
     url: json-schema/wayfair-graph-ql-request-schema.json
-    title: GraphQL Request Schema
   - type: JSONSchema
     url: json-schema/wayfair-graph-ql-response-schema.json
-    title: GraphQL Response Schema
   - type: JSONSchema
     url: json-schema/wayfair-token-request-schema.json
-    title: Token Request Schema
   - type: JSONSchema
     url: json-schema/wayfair-token-response-schema.json
-    title: Token Response Schema
   - type: JSONStructure
     url: json-structure/wayfair-graph-ql-request-structure.json
-    title: GraphQL Request Structure
   - type: JSONStructure
     url: json-structure/wayfair-graph-ql-response-structure.json
-    title: GraphQL Response Structure
   - type: Examples
     url: examples/wayfair-graph-ql-request-example.json
-    title: GraphQL Request Example
   - type: Examples
     url: examples/wayfair-token-request-example.json
-    title: Token Request Example
-  - url: graphql/wayfair-graphql.md
-    type: GraphQL
+  - type: GraphQL
+    url: graphql/wayfair-graphql.md
+- aid: wayfair:wayfair-graphql-api
+  name: Wayfair GraphQL API
+  description: GraphQL query and mutation operations for supplier management.
+  humanURL: https://developer.wayfair.com/docs/
+  baseURL: https://api.wayfair.com/v1/graphql
+  tags:
+  - GraphQL
+  properties:
+  - type: OpenAPI
+    url: openapi/wayfair-graphql-api-openapi.yml
+  - type: Documentation
+    url: https://developer.wayfair.com/docs/
+  - type: Documentation
+    url: https://developer.wayfair.io/posts/graphQL
+  - type: JSONSchema
+    url: json-schema/wayfair-graph-ql-request-schema.json
+  - type: JSONSchema
+    url: json-schema/wayfair-graph-ql-response-schema.json
+  - type: JSONSchema
+    url: json-schema/wayfair-token-request-schema.json
+  - type: JSONSchema
+    url: json-schema/wayfair-token-response-schema.json
+  - type: JSONStructure
+    url: json-structure/wayfair-graph-ql-request-structure.json
+  - type: JSONStructure
+    url: json-structure/wayfair-graph-ql-response-structure.json
+  - type: Examples
+    url: examples/wayfair-graph-ql-request-example.json
+  - type: Examples
+    url: examples/wayfair-token-request-example.json
+  - type: GraphQL
+    url: graphql/wayfair-graphql.md
 common:
 - type: AgenticAccess
   url: agentic-access/wayfair-agentic-access.yml
