@@ -1,0 +1,16 @@
+{
+  "provider": "wayfair",
+  "sources": [
+    "wayfair-authentication-api-openapi.yml",
+    "wayfair-graphql-api-openapi.yml"
+  ],
+  "outputs": [
+    "wayfair-authentication-api-openapi.yml",
+    "wayfair-graphql-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
