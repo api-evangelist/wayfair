@@ -77,16 +77,16 @@ apis:
     url: examples/wayfair-token-request-example.json
   - type: GraphQL
     url: graphql/wayfair-graphql.md
-- aid: wayfair:wayfair-graphql-api
-  name: Wayfair GraphQL API
+- aid: wayfair:wayfair-graph-ql-api
+  name: Wayfair Graph QL API
   description: GraphQL query and mutation operations for supplier management.
   humanURL: https://developer.wayfair.com/docs/
   baseURL: https://api.wayfair.com/v1/graphql
   tags:
-  - GraphQL
+  - Graph QL
   properties:
   - type: OpenAPI
-    url: openapi/wayfair-graphql-api-openapi.yml
+    url: openapi/wayfair-graph-ql-api-openapi.yml
   - type: Documentation
     url: https://developer.wayfair.com/docs/
   - type: Documentation
