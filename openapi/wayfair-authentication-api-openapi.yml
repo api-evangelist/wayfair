@@ -83,20 +83,6 @@ components:
           type: string
           description: Human-readable error description.
           example: Invalid or expired access token.
-    TokenRequest:
-      type: object
-      required:
-      - client_id
-      - client_secret
-      properties:
-        client_id:
-          type: string
-          description: The application client ID issued by Wayfair.
-          example: your-client-id-here
-        client_secret:
-          type: string
-          description: The application client secret issued by Wayfair.
-          example: your-client-secret-here
     TokenResponse:
       type: object
       properties:
@@ -112,6 +98,20 @@ components:
           type: integer
           description: Token expiration time in seconds.
           example: 3600
+    TokenRequest:
+      type: object
+      required:
+      - client_id
+      - client_secret
+      properties:
+        client_id:
+          type: string
+          description: The application client ID issued by Wayfair.
+          example: your-client-id-here
+        client_secret:
+          type: string
+          description: The application client secret issued by Wayfair.
+          example: your-client-secret-here
   securitySchemes:
     bearerAuth:
       type: http
