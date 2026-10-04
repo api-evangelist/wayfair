@@ -90,22 +90,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    GraphQLRequest:
-      type: object
-      required:
-      - query
-      properties:
-        query:
-          type: string
-          description: The GraphQL query or mutation string.
-          example: 'query { purchaseOrders(limit: 10) { edges { node { poNumber status } } } }'
-        variables:
-          type: object
-          description: Variables for the GraphQL operation.
-        operationName:
-          type: string
-          description: The name of the operation to execute when the query contains multiple operations.
-          example: GetPurchaseOrders
     ErrorResponse:
       type: object
       properties:
@@ -128,6 +112,22 @@ components:
           description: List of errors if any occurred during query execution.
           items:
             $ref: '#/components/schemas/GraphQLError'
+    GraphQLRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          description: The GraphQL query or mutation string.
+          example: 'query { purchaseOrders(limit: 10) { edges { node { poNumber status } } } }'
+        variables:
+          type: object
+          description: Variables for the GraphQL operation.
+        operationName:
+          type: string
+          description: The name of the operation to execute when the query contains multiple operations.
+          example: GetPurchaseOrders
     GraphQLError:
       type: object
       properties:
