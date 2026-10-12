@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/wayfair/integrations
+- https://n8n.io/integrations/wayfair/
+- https://composio.dev/toolkits/wayfair
+- https://monid.ai/tools/wayfair
+checked:
+- https://composio.dev/toolkits/wayfair
+- https://monid.ai/tools/wayfair
+- https://n8n.io/integrations/wayfair/
+- https://zapier.com/apps/wayfair/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
