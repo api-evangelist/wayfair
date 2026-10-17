@@ -90,17 +90,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error code.
-          example: unauthorized
-        error_description:
-          type: string
-          description: Human-readable error description.
-          example: Invalid or expired access token.
     GraphQLResponse:
       type: object
       properties:
@@ -112,6 +101,17 @@ components:
           description: List of errors if any occurred during query execution.
           items:
             $ref: '#/components/schemas/GraphQLError'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error code.
+          example: unauthorized
+        error_description:
+          type: string
+          description: Human-readable error description.
+          example: Invalid or expired access token.
     GraphQLRequest:
       type: object
       required:

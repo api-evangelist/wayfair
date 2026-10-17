@@ -72,6 +72,17 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error code.
+          example: unauthorized
+        error_description:
+          type: string
+          description: Human-readable error description.
+          example: Invalid or expired access token.
     TokenResponse:
       type: object
       properties:
@@ -87,17 +98,6 @@ components:
           type: integer
           description: Token expiration time in seconds.
           example: 3600
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error code.
-          example: unauthorized
-        error_description:
-          type: string
-          description: Human-readable error description.
-          example: Invalid or expired access token.
     TokenRequest:
       type: object
       required:
