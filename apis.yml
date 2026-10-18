@@ -83,6 +83,8 @@ apis:
   humanURL: https://developer.wayfair.com/docs/
   baseURL: https://api.wayfair.com/v1/graphql
   tags:
+  - GraphQL
+  tags_raw:
   - Graph QL
   properties:
   - type: OpenAPI
