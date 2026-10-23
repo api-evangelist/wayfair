@@ -112,6 +112,8 @@ apis:
   - type: GraphQL
     url: graphql/wayfair-graphql.md
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/wayfair/overview
 - type: Plans
   url: plans/wayfair-plans-pricing.yml
 - type: RateLimits
