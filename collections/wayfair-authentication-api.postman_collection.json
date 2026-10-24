@@ -1,169 +1,188 @@
 {
+  "info": {
+    "_postman_id": "3beccdfc-59bd-4524-9292-a9b07aa50394",
+    "name": "Wayfair Supplier Authentication API",
+    "description": "GraphQL-based API for Wayfair suppliers to manage orders, inventory, product catalogs, shipping notifications, and more. This OpenAPI specification documents the REST-style token endpoint and the GraphQL endpoint used by suppliers to interact with the Wayfair platform. Wayfair's federated GraphQL architecture allows suppliers to request only the data they need across 10,000+ supplier integrations.\n\nContact Support:\n Name: Wayfair Developer Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:14:46.000Z",
+    "updatedAt": "2026-10-22T01:14:46.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-3beccdfc-59bd-4524-9292-a9b07aa50394"
+  },
   "item": [
     {
-      "id": "7193cc29-5188-477f-9cac-4df8a5484a0e",
-      "name": "Authentication",
-      "description": {
-        "content": "Token-based authentication for API access.",
-        "type": "text/plain"
-      },
+      "name": "auth",
       "item": [
         {
-          "id": "d25f4c90-5abf-4bca-aa26-f18e992a5e04",
-          "name": "Wayfair Get Access Token",
-          "request": {
-            "name": "Wayfair Get Access Token",
-            "description": {
-              "content": "Obtain a temporary OAuth2 access token using your application client ID and secret. Tokens are used to authenticate subsequent API requests. Tokens expire and must be refreshed periodically.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "auth",
-                "token"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
+          "name": "token",
+          "item": [
             {
-              "id": "0d10bc25-80b2-4673-aa9b-7dc0aa8e21fb",
-              "name": "Access token returned successfully.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "auth",
-                    "token"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+              "name": "Wayfair Get Access Token",
+              "id": "75d13b9f-91fa-483f-9db9-9ce8416310f9",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
                 "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"client_id\": \"your-client-id-here\",\n  \"client_secret\": \"your-client-secret-here\"\n}",
+                  "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\"\n}",
                   "options": {
                     "raw": {
+                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"access_token\": \"eyJhbGciOiJSUzI1NiJ9.example.token\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": 3600\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "61d954d8-d995-429c-ac64-8d33222e0912",
-              "name": "Invalid credentials.",
-              "originalRequest": {
+                },
                 "url": {
-                  "path": [
-                    "auth",
-                    "token"
-                  ],
+                  "raw": "{{baseUrl}}/auth/token",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [],
-                  "variable": []
+                  "path": [
+                    "auth",
+                    "token"
+                  ]
                 },
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"client_id\": \"your-client-id-here\",\n  \"client_secret\": \"your-client-secret-here\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
+                "description": "Obtain a temporary OAuth2 access token using your application client ID and secret. Tokens are used to authenticate subsequent API requests. Tokens expire and must be refreshed periodically."
               },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "b5ac212e-5199-4e66-a850-22e697bc6942",
+                  "name": "Access token returned successfully.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/token",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "token"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"access_token\": \"<string>\",\n  \"token_type\": \"<string>\",\n  \"expires_in\": \"<integer>\"\n}",
+                  "createdAt": "2026-10-22T01:14:47.000Z",
+                  "updatedAt": "2026-10-22T01:14:47.000Z",
+                  "uid": "35240-b5ac212e-5199-4e66-a850-22e697bc6942"
+                },
+                {
+                  "id": "855db7d8-bad1-42c0-86e8-ae41e8f8d7ff",
+                  "name": "Invalid credentials.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"client_id\": \"<string>\",\n  \"client_secret\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/token",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "token"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"error\": \"<string>\",\n  \"error_description\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T01:14:47.000Z",
+                  "updatedAt": "2026-10-22T01:14:47.000Z",
+                  "uid": "35240-855db7d8-bad1-42c0-86e8-ae41e8f8d7ff"
                 }
               ],
-              "body": "{\n  \"error\": \"invalid_client\",\n  \"error_description\": \"Client authentication failed.\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-22T01:14:47.000Z",
+              "updatedAt": "2026-10-22T01:14:47.000Z",
+              "uid": "35240-75d13b9f-91fa-483f-9db9-9ce8416310f9"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "c4b9b8b2-baaf-4bb8-8134-20618605c330",
+          "createdAt": "2026-10-22T01:14:47.000Z",
+          "updatedAt": "2026-10-22T01:14:47.000Z",
+          "uid": "35240-c4b9b8b2-baaf-4bb8-8134-20618605c330"
         }
       ],
-      "event": []
+      "id": "1d212951-420a-4c35-9fba-961510bc9df6",
+      "createdAt": "2026-10-22T01:14:47.000Z",
+      "updatedAt": "2026-10-22T01:14:47.000Z",
+      "uid": "35240-1d212951-420a-4c35-9fba-961510bc9df6"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.wayfair.com/v1",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.wayfair.com/v1"
     }
-  ],
-  "info": {
-    "_postman_id": "65f0d1db-5d08-4656-b86a-9e31d0727e1d",
-    "name": "Wayfair Supplier Authentication API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "GraphQL-based API for Wayfair suppliers to manage orders, inventory, product catalogs, shipping notifications, and more. This OpenAPI specification documents the REST-style token endpoint and the GraphQL endpoint used by suppliers to interact with the Wayfair platform. Wayfair's federated GraphQL architecture allows suppliers to request only the data they need across 10,000+ supplier integrations.\n\nContact Support:\n Name: Wayfair Developer Support",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

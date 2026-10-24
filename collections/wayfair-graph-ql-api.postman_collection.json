@@ -1,0 +1,252 @@
+{
+  "info": {
+    "_postman_id": "7f4e4681-9c35-4e9b-bf62-3ad97a91508a",
+    "name": "Wayfair Supplier GraphQL API",
+    "description": "GraphQL-based API for Wayfair suppliers to manage orders, inventory, product catalogs, shipping notifications, and more. This OpenAPI specification documents the REST-style token endpoint and the GraphQL endpoint used by suppliers to interact with the Wayfair platform. Wayfair's federated GraphQL architecture allows suppliers to request only the data they need across 10,000+ supplier integrations.\n\nContact Support:\n Name: Wayfair Developer Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T01:14:52.000Z",
+    "updatedAt": "2026-10-22T01:14:53.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-7f4e4681-9c35-4e9b-bf62-3ad97a91508a"
+  },
+  "item": [
+    {
+      "name": "graphql",
+      "item": [
+        {
+          "name": "Wayfair Execute GraphQL Query",
+          "id": "434777d8-bc73-4f8d-9410-f3338d0fb27a",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {},\n  \"operationName\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            },
+            "description": "Execute a GraphQL query or mutation against the Wayfair Supplier API. Supports operations for order management, inventory updates, product catalog management, and shipping notifications. The GraphQL schema enables suppliers to precisely request only the fields needed for their integration workflows."
+          },
+          "response": [
+            {
+              "id": "face6cae-02a8-4c5d-a75a-5e3459795acc",
+              "name": "Successful GraphQL response with data or errors.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {},\n  \"operationName\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/graphql",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "graphql"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"data\": {},\n  \"errors\": [\n    {\n      \"message\": \"<string>\",\n      \"locations\": [\n        {\n          \"line\": \"<integer>\",\n          \"column\": \"<integer>\"\n        },\n        {\n          \"line\": \"<integer>\",\n          \"column\": \"<integer>\"\n        }\n      ],\n      \"path\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"message\": \"<string>\",\n      \"locations\": [\n        {\n          \"line\": \"<integer>\",\n          \"column\": \"<integer>\"\n        },\n        {\n          \"line\": \"<integer>\",\n          \"column\": \"<integer>\"\n        }\n      ],\n      \"path\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+              "createdAt": "2026-10-22T01:14:53.000Z",
+              "updatedAt": "2026-10-22T01:14:53.000Z",
+              "uid": "35240-face6cae-02a8-4c5d-a75a-5e3459795acc"
+            },
+            {
+              "id": "4325e9b5-6540-4987-936a-1eff61bc585b",
+              "name": "Unauthorized - invalid or expired access token.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {},\n  \"operationName\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/graphql",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "graphql"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\",\n  \"error_description\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:14:53.000Z",
+              "updatedAt": "2026-10-22T01:14:53.000Z",
+              "uid": "35240-4325e9b5-6540-4987-936a-1eff61bc585b"
+            },
+            {
+              "id": "c2b143a6-ea70-4019-9469-b81662096aee",
+              "name": "Forbidden - insufficient permissions for the requested operation.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"variables\": {},\n  \"operationName\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/graphql",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "graphql"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"error\": \"<string>\",\n  \"error_description\": \"<string>\"\n}",
+              "createdAt": "2026-10-22T01:14:53.000Z",
+              "updatedAt": "2026-10-22T01:14:53.000Z",
+              "uid": "35240-c2b143a6-ea70-4019-9469-b81662096aee"
+            }
+          ],
+          "createdAt": "2026-10-22T01:14:53.000Z",
+          "updatedAt": "2026-10-22T01:14:53.000Z",
+          "uid": "35240-434777d8-bc73-4f8d-9410-f3338d0fb27a"
+        }
+      ],
+      "id": "b0b79b10-15b5-46ba-84bd-affab919c2d3",
+      "createdAt": "2026-10-22T01:14:53.000Z",
+      "updatedAt": "2026-10-22T01:14:53.000Z",
+      "uid": "35240-b0b79b10-15b5-46ba-84bd-affab919c2d3"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.wayfair.com/v1"
+    }
+  ]
+}
